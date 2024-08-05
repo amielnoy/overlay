@@ -1,5 +1,5 @@
-import { test, Expect } from '../fixtures.js';
-import { PACKAGE_REPORT_SELECTOR } from './e2e-tests-constants.js';
+import { Expect, test } from '../fixtures.js';
+import { packageReportTagName } from '../src/globals.js';
 
 test.describe('npm', () => {
   test('Package Report is visible in npmjs.com', async ({ page }) => {
@@ -13,7 +13,7 @@ test.describe('npm', () => {
     });
 
     // get the package name from overlay popup
-    const overlayPackageInfoComponent = page.locator(PACKAGE_REPORT_SELECTOR);
+    const overlayPackageInfoComponent = page.locator(packageReportTagName);
     await Expect(overlayPackageInfoComponent).toHaveAttribute('package-name', packageName);
   });
 
@@ -26,7 +26,7 @@ test.describe('npm', () => {
     });
 
     // get the package name from overlay popup
-    let overlayPackageInfoComponent = page.locator(PACKAGE_REPORT_SELECTOR);
+    let overlayPackageInfoComponent = page.locator(packageReportTagName);
     await Expect(overlayPackageInfoComponent).toHaveAttribute('package-name', packageName);
 
     // use the search bar to find the @angular/cli package
@@ -39,7 +39,7 @@ test.describe('npm', () => {
     await getSearchResultInDropDown.click();
 
     // check that overlay's title has changed to @angular/cli
-    overlayPackageInfoComponent = page.locator(PACKAGE_REPORT_SELECTOR);
+    overlayPackageInfoComponent = page.locator(packageReportTagName);
     await Expect(overlayPackageInfoComponent).toHaveAttribute('package-name', packageName);
   });
 
@@ -59,8 +59,8 @@ test.describe('npm', () => {
     const getSearchResultInDropDown = page.locator(`li[aria-label="${packageName}"]`);
     await getSearchResultInDropDown.click();
 
-    // check that overlay's title has changed to @angular/cli
-    const overlayPackageInfoComponent = page.locator(PACKAGE_REPORT_SELECTOR);
+    // check that overlay's title is "@ngneat/spectator"
+    const overlayPackageInfoComponent = page.locator(packageReportTagName);
     await Expect(overlayPackageInfoComponent).toHaveAttribute('package-name', packageName);
   });
 });
